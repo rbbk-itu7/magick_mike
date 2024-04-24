@@ -8,26 +8,30 @@ function transform() {
 function grayscale() {
    "C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" $1 -colorspace GRAY output.png
 }
-echo "Which picture do you want to modify?"
-read pathtoPicture
-if [[ $pathtoPicture == "" ]]; then
-  pathtoPicture="picture.png"
-  fi
-echo "You chose $pathtoPicture"
-echo "Which operation do you want to perform(greyscale(g),transform(t),dither(d))"
-read option
-if [[ $option = "g" ]]; then
- grayscale $pathtoPicture
-  elif [[ $option = "d" ]]; then
-    dither $pathtoPicture
-    elif [[ $option = "t" ]];then
-      read -p "Specify a width" width
-      read -p "Specify a height" height
-      echo "You are resizing to height:$height and width:$width"
-      transform $pathtoPicture
-      else
-        echo "You idiot"
+function main() {
+  echo "Which picture do you want to modify?"
+  read pathtoPicture
+  if [[ $pathtoPicture == "" ]]; then
+    pathtoPicture="picture.png"
     fi
+  echo "You chose $pathtoPicture"
+  echo "Which operation do you want to perform(greyscale(g),transform(t),dither(d))"
+  read option
+  if [[ $option = "g" ]]; then
+   grayscale $pathtoPicture
+    elif [[ $option = "d" ]]; then
+      dither $pathtoPicture
+      elif [[ $option = "t" ]];then
+        read -p "Specify a width" width
+        read -p "Specify a height" height
+        echo "You are resizing to height:$height and width:$width"
+        transform $pathtoPicture
+        else
+          echo "You idiot"
+          main
+      fi
+}
+main
 read t
 
 #"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" $pathtoPicture -color-matrix \
