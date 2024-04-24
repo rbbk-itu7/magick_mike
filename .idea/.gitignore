@@ -1,7 +1,9 @@
-output.png
 
 workspace.xml
 usage.statistics.xml
 shelf/
 **/*.iml
-modules
+modules.xml
+gradle.xml
+dictionaries/
+libraries/
