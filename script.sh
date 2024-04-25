@@ -17,19 +17,21 @@ function main() {
   echo "You chose $pathtoPicture"
   echo "Which operation do you want to perform(greyscale(g),transform(t),dither(d))"
   read option
-  if [[ $option = "g" ]]; then
-   grayscale $pathtoPicture
-    elif [[ $option = "d" ]]; then
-      dither $pathtoPicture
-      elif [[ $option = "t" ]];then
-        read -p "Specify a width" width
+case $option in
+
+
+
+"g")
+grayscale $pathtoPicture;;
+"d")
+dither $pathtoPicture;;
+"t")
+read -p "Specify a height" height
         read -p "Specify a height" height
-        echo "You are resizing to height:$height and width:$width"
-        transform $pathtoPicture
-        else
-          echo "You idiot"
-          main
-      fi
+        read -p "Specify a width" width
+        echo "You are resizing to width:$width and height:$height"
+        transform $pathtoPicture $width $height
+esac
 }
 main
 read t
