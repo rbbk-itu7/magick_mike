@@ -1,17 +1,17 @@
 #!/bin/bash
 function dither() {
   echo "Dithering the picture"
-    "C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" convert $1 -colorspace gray -ordered-dither o8x8 output.png
+    convert $1 -colorspace gray -ordered-dither o8x8 output.png
     echo "Dithering complete, written to output.png"
 }
 function transform() {
   echo "Transforming the picture"
-  "C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" $1 -transform 320x240 output.png
+   convert $1 -transform 320x240 output.png
   echo "Transforming complete, wirtten to ouutput.png"
 }
 function grayscale() {
   echo "Grayscaling the Picture"
-   "C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" $1 -colorspace GRAY output.png
+   convert $1 -colorspace GRAY output.png
    echo "Grayscaling complete"
 }
 function main() {
