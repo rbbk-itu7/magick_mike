@@ -6,7 +6,9 @@ function dither() {
 }
 function transform() {
   echo "Transforming the picture"
-   convert "$1" -transform 320x240 output.png
+  echo
+  echo "$1 $2x$3"
+   convert "$1" -resize "$2x$3!" output.png
   echo "Transforming complete, written to output.png"
 }
 function grayscale() {
@@ -30,9 +32,8 @@ grayscale $pathtoPicture;;
 "d")
 dither $pathtoPicture;;
 "t")
-read -r -p "Specify a height" height
-        read -r -p "Specify a height" height
-        read -r -p "Specify a width" width
+        read -r -p "Specify a height " height
+        read -r -p "Specify a width " width
         echo "You are resizing to width:$width and height:$height"
         transform $pathtoPicture "$width" "$height"
 esac
