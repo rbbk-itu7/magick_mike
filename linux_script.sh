@@ -1,20 +1,24 @@
 #!/bin/bash
 dither() {
   echo "Dithering the picture"
-    convert "$1" -colorspace gray -ordered-dither o8x8 output.png
-    echo "Dithering complete, written to output.png"
+    convert "$1" -colorspace gray -ordered-dither o8x8 "output/$outputPath"
+    echo "Dithering complete, written to $outputPath"
 }
 transform() {
   echo "Transforming the picture"
   echo
   echo "$1 $2x$3"
-   convert "$1" -resize "$2x$3!" output.png
-  echo "Transforming complete, written to output.png"
+   convert "$1" -resize "$2x$3!" "$outputPath"
+  echo "Transforming complete, written to $outputPath"
 }
 grayscale() {
-  echo "Grayscaling the Picture"
-   convert "$1" -colorspace GRAY output.png
-   echo "Grayscaling complete, written to output.png"
+  echo "Grayscaling the picture"
+   convert "$1" -colorspace GRAY "$outputPath"
+   echo "Grayscaling complete, written to $outputPath"
+}
+conv() {
+  echo "Converting the picture"
+  convert "$pathToPicture" "$outputPath"
 }
 getPath() {
   echo "Which picture do you want to modify(default picture.png)?"
@@ -22,19 +26,14 @@ getPath() {
   if [[ $pathToPicture == "" ]]; then
     pathToPicture="picture.png"
     fi
-  echo "You chose $pathToPicture"
   if [[ ! -f $pathToPicture ]]; then
     clear
     echo "No File named $pathToPicture found"
     getPath
     fi
 }
-main() {
-  clear
-  local pathToPicture=""
-  getPath
-  echo "-----------------------------"
-  echo "Which operation do you want to perform(greyscale(g),transform(t),dither(d))"
+casing(){
+echo "Which operation do you want to perform(greyscale(g),transform(t),dither(d),convert(c))"
   read -r option
 case $option in
 
@@ -46,7 +45,31 @@ dither "$pathToPicture";;
         read -r -p "Specify a height " height
         read -r -p "Specify a width " width
         echo "You are resizing to width:$width and height:$height"
-        transform "$pathToPicture" "$width" "$height"
+        transform "$pathToPicture" "$width" "$height";;
+"c")
+  conv;;
+*)
+  clear
+  echo "no valid operation"
+  casing;;
 esac
+}
+main() {
+  clear
+  local pathToPicture=""
+  getPath
+  echo "-----------------------------"
+  echo "Filename: $pathToPicture"
+  echo $(identify -format "%[fx:w]px by %[fx:h]px " "$pathToPicture")
+
+  echo "-----------------------------"
+
+  echo "Choose new filename(default output.png)"
+  read -r outputPath
+  if [[  $outputPath == "" ]]; then
+      outputPath="output.png"
+      fi
+
+casing
 }
 main
