@@ -7,16 +7,16 @@ dither() {
 transform() {
   echo "Transforming the picture"
    convert "$1" -resize "$2x$3!" "$outputPath"
-  echo "Transforming complete, written to $outputPath"
+  echo "Transforming complete, written to output/$outputPath"
 }
 grayscale() {
   echo "Grayscaling the picture"
    convert "$1" -colorspace GRAY "$outputPath"
-   echo "Grayscaling complete, written to $outputPath"
+   echo "Grayscaling complete, written to output/$outputPath"
 }
 conv() {
   echo "Converting the picture"
-  convert "$pathToPicture" "$outputPath"
+  convert "$pathToPicture" "output/$outputPath"
 }
 getPath() {
   echo "Which picture do you want to modify(default picture.png)?"
