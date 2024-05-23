@@ -1,4 +1,10 @@
 #!/bin/bash
+checkDir() {
+if [ ! -d "output" ]; then
+  mkdir output
+fi
+
+}
 dither() {
   echo "Dithering the picture"
     convert "$1" -colorspace gray -ordered-dither o8x8 "output/$outputPath"
@@ -81,7 +87,7 @@ main() {
   clear
   echo "You have selected $pathToPicture"
   printInfo
-
+  checkDir
   echo "Choose new filename(default output.png)"
   local outputPath=""
   read -r outputPath
